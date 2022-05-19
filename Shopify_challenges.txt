@@ -1,0 +1,38 @@
+Fall 2022 Data Science Intern Challenge
+
+1. 
+
+a. Looking at the data, it seems that there are some outliers on the higher end which are bringing the average up significantly. Shop 78 sells two products for $51450, for example. They sell this 46 times. This must either be a mistake in shop 78's recording system such as this value being computes as an integer instead of a float (forgot to add decimal), or a single user buying a pair of historically important and expensive shoes. 
+
+b. We could instead order the order_amount values in ascending order and find the median value. Since there are clear outliers, (and only 97 of them total), we can find median instead of mean to find a more accurate measure of the AOV.
+
+c. The media is $284.00, which seems like a much more reasonable value for the average value of an order. 
+
+2. 
+
+a. 
+SELECT Count(ShipperName)
+FROM Shippers ship, Orders ord
+WHERE ship.ShipperID = ord.ShipperID
+AND ShipperName = 'Speedy Express';
+
+Yields 54 orders shipped by Speedy Express.
+
+b. 
+SELECT LastName, COUNT(LastName) as Freq
+FROM Employees emp, Orders ord
+WHERE emp.EmployeeID = ord.EmployeeID
+GROUP BY LastName
+ORDER BY Freq DESC;
+
+Yields 'Peacock' as the Last name of the employee with the most orders.
+
+c. 
+SELECT ProductName, COUNT(ProductName) as Freq
+FROM Products pro, OrderDetails ordd, Orders ords, Customers cus
+WHERE pro.ProductID = ordd.ProductID AND ordd.OrderID = ords.OrderID AND ords.CustomerID = cus.CustomerID
+AND Country = 'Germany'
+GROUP BY ProductName
+ORDER BY Freq DESC;
+
+Yields 'Gorgonzola Telino' as the most common product ordered in the country of Germany.
